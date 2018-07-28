@@ -1,0 +1,19 @@
+{
+    "xrf": {
+        "port": 3001
+    },
+    "pg": {
+        "pghost": "localhost",
+        "pgport": "5432",
+        "pgrole": "xadmin",
+        "pgdb": "postgres",
+        "pgpass": "rewq12",
+        "pgschema": "blumatter"
+    },
+    "aws": {
+        "bucket": "mr-xadmin-rawdata-use1-dev",
+        "accountId": "978599919695",
+        "region": "us-east-1",
+        "SNSTopic" : "Test"
+    }
+}
