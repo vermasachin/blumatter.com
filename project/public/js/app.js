@@ -82,16 +82,28 @@ app.controller("login",["$scope",'$http','$state',function($scope,$http,$state){
 
 app.controller("registerClient",["$scope",'$http','$state',function($scope,$http,$state){
     $scope.name = "";
+    $scope.email = "";
+    $scope.phone = "";
     
-    $scope.login = function(){
-        $http(api.login({name : $scope.name})).then(function(res){
-            if(res.data && res.data.data && res.data.data.name){
-                var user = res.data.data;
-                if(user.role === 'client'){
-                    $state.go("/create-project");
-                }else{
-                    $state.go("/uploadCV");
-                }
+    $scope.register = function(){
+        $http(api.registerClient({
+            name : $scope.name,
+            email: $scope.email, 
+            phone : $scope.phone
+        })).then(function(res){
+            if(res.data && res.data.data && res.data.ok){
+                $http(api.login({name : $scope.name})).then(function(res){
+                    if(res.data && res.data.data && res.data.data.name){
+                        var user = res.data.data;
+                        if(user.role === 'client'){
+                            $state.go("/create-project");
+                        }else{
+                            $state.go("/uploadCV");
+                        }
+                    }else{
+                        $scope.error = res.data.error;
+                    }
+                });
             }else{
                 $scope.error = res.data.error;
             }

@@ -1,0 +1,6 @@
+{
+    "invalidDataField" : "Invalid data field",
+    "invalidDataFormat" : "invalid data format",
+    "userExists" : "Email already registered",
+    "passwordError" : "Password verification failed"
+}

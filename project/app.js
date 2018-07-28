@@ -21,6 +21,8 @@ app.use(session({
     store: new pgsession({})
 }));
 
+app.use(require('morgan')('dev'));
+
 // ******* Xray Routes  ************ //
 var router = require("./api/");
 

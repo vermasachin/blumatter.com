@@ -6,12 +6,14 @@
 
 
 
-var models = require("../models/");
+var models = require("../core/models/");
 var fs = require("fs");
+var path = require("path");
 
 
 var home = function(req,res){
-    fs.createReadStream("../public/html/index.html").pipe(res);
+    var fullpath = path.resolve("./public/html/index.html");
+    fs.createReadStream(fullpath).pipe(res);
 };
 
 var createClient = function(req,res){
@@ -65,7 +67,7 @@ var createProject = function(req,res){
 
 var login = function(req,res){
     models.users.findOne({name : {eq : req.body.name}},function(err,user){
-        res.json({ok : !err, data : user || null});
+        res.json({ok : !err, data : user || null, error : err ? err.message : null});
     });
 };
 

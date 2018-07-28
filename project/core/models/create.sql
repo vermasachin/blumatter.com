@@ -10,13 +10,13 @@ CREATE TABLE session (
 
 CREATE TABLE client (
     name            varchar(50),
-    email           varchar(50,
+    email           varchar(50),
     phone           varchar(50)
 );
 
 CREATE TABLE expert (
     name            varchar(50),
-    email           varchar(50,
+    email           varchar(50),
     phone           varchar(50),
     location        varchar(50),
     cvfile          varchar(255),
