@@ -69,9 +69,9 @@ app.controller("login",["$scope",'$http','$state',function($scope,$http,$state){
             if(res.data && res.data.data && res.data.data.name){
                 var user = res.data.data;
                 if(user.role === 'client'){
-                    $state.go("/create-project");
+                    $state.go("createProject");
                 }else{
-                    $state.go("/uploadCV");
+                    $state.go("uploadCV");
                 }
             }else{
                 $scope.error = res.data.error;
@@ -94,7 +94,7 @@ app.controller("registerClient",["$scope",'$http','$state',function($scope,$http
             if(res.data && res.data.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
-                        $state.go("/create-project");
+                        $state.go("createProject");
                     }else{
                         $scope.error = res.data.error;
                     }
@@ -131,7 +131,7 @@ app.controller("registerExpert",["$scope",'$http','$state',function($scope,$http
             if(res.data && res.data.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
-                        $state.go("/uploadCV");
+                        $state.go("uploadCV");
                     }else{
                         $scope.error = res.data.error;
                     }

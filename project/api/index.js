@@ -21,7 +21,7 @@ var createClient = function(req,res){
         if(err && err.message === 'not_found'){
             models.client.insert({
                 name : req.body.name, email : req.body.email, phone : req.body.phone
-            },function(err,res){
+            },function(err,row){
                 res.json({ok : !err, error : err ? err.message : null});
             });
         }else{
