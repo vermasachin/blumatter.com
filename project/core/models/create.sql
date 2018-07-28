@@ -3,6 +3,11 @@
  * Created: 28 Jul, 2018
  */
 
+CREATE TABLE session (
+    s           varchar(100),
+    sess        json
+);
+
 CREATE TABLE client (
     name            varchar(50),
     email           varchar(50,

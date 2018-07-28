@@ -8,5 +8,6 @@ module.exports = {
     client : require("./client"),
     expert : require("./expert"),
     project : require("./project"),
-    users : require("./users")
+    users : require("./users"),
+    session : require("./session")
 };

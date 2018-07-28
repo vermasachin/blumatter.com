@@ -6,7 +6,6 @@
 
 
 
-var async = require("async");
 var models = require("../models/");
 var fs = require("fs");
 
@@ -48,13 +47,33 @@ var createExpert = function(req,res){
         }
     });
 };
-name            : types.string,
-    brief           : types.string,
-    industry        : types.string,
-    skills          : types.json
+
 var createProject = function(req,res){
-    
-}
+    models.project.findOne({name : {eq : req.body.name}}, function(err,project){
+        if(err && err.message === 'not_found'){
+            models.projects.insert({
+                name    : req.body.name,
+                brief   : req.body.brief,
+                industry  : req.body.industry,
+                skills   : req.body.skills
+            });
+        }else{
+            res.json({ok : false, error : "Account exists already"});
+        }
+    });
+};
+
+var login = function(req,res){
+    models.users.findOne({name : {eq : req.body.name}},function(err,user){
+        res.json({ok : !err, data : user || null});
+    });
+};
+
+var logout = function(req,res){
+    res.session.destroy(function(){
+        res.json({ok : true});
+    });
+};
 
 exports.addRoutes = function(app){
     app.get("/",home);
