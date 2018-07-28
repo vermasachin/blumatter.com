@@ -75,6 +75,10 @@ var logout = function(req,res){
     });
 };
 
+var upload = function(req,res){
+    
+};
+
 exports.addRoutes = function(app){
     app.get("/",home);
     
@@ -83,4 +87,5 @@ exports.addRoutes = function(app){
     app.post('/project', createProject);
     app.post("/login",login);
     app.get("/logout",logout);
+    app.post("/uploadcv",upload);
 };

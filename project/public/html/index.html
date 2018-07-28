@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fontello-codes.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fontello-embedded.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fontello.css" />
+    </head>
+    <body>
+        <<div ng-app="blumatter">
+            <div ng-include="'html/loader.html'"></div>
+            <div ng-include="'html/error.html'"></div>
+            <div class="container-fluid" style="margin-top: 50px; padding-bottom: 50px;">
+                <div ui-view style="position: relative;">
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/js/api.js"></script>
+        <script type="text/javascript" src="/js/lib/angular.min.js"></script>
+        <script type="text/javascript" src="/js/lib/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/lib/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="/js/controllers.js"></script>
+    </body>
+</html>
