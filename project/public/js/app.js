@@ -12,17 +12,10 @@ app.config([
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
+        
         $stateProvider.state('home', {
             url : '/',
-            controller : 'init',
-            template : "<div></div>"
-        });
-        $stateProvider.state("rooterror",{
-            url : "/error/:type/:title/:message",
-            templateUrl : "html/rooterror.html",
-            controller : function($state,$stateParams,$scope,view){
-                view.message($scope,$stateParams.type,$stateParams.title,$stateParams.message);
-            }
+            templateUrl : 'html/home.html'
         });
         
         $stateProvider.state('login', {
@@ -58,6 +51,11 @@ app.config([
         $stateProvider.state('viewProject', {
             url : '/view-project',
             templateUrl : 'html/viewProject.html'
+        });
+        
+        $stateProvider.state('uploadCV', {
+            url : '/uploadCV',
+            templateUrl : 'html/uploadCV.html'
         });
         
     }
