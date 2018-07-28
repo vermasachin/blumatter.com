@@ -49,7 +49,7 @@ app.config([
         });
         
         $stateProvider.state('viewProject', {
-            url : '/view-project',
+            url : '/view-project/:projectName',
             templateUrl : 'html/viewProject.html'
         });
         
@@ -94,12 +94,72 @@ app.controller("registerClient",["$scope",'$http','$state',function($scope,$http
             if(res.data && res.data.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
-                        var user = res.data.data;
-                        if(user.role === 'client'){
-                            $state.go("/create-project");
-                        }else{
-                            $state.go("/uploadCV");
-                        }
+                        $state.go("/create-project");
+                    }else{
+                        $scope.error = res.data.error;
+                    }
+                });
+            }else{
+                $scope.error = res.data.error;
+            }
+        });
+    };
+}]);
+
+
+app.controller("registerExpert",["$scope",'$http','$state',function($scope,$http,$state){
+    $scope.name = "";
+    $scope.email = "";
+    $scope.phone = "";
+    $scope.location = "";
+    $scope.cvfile = "";
+    $scope.description = "";
+    $scope.industry = "";
+    $scope.skills = "";
+    
+    $scope.register = function(){
+        $http(api.registerExpert({
+            name : $scope.name,
+            email : $scope.email,
+            phone : $scope.phone,
+            location : $scope.location,
+            cvfile : $scope.cvfile,
+            description : $scope.description,
+            industry : $scope.industry,
+            skills : $scope.skills
+        })).then(function(res){
+            if(res.data && res.data.data && res.data.ok){
+                $http(api.login({name : $scope.name})).then(function(res){
+                    if(res.data && res.data.data && res.data.data.name){
+                        $state.go("/uploadCV");
+                    }else{
+                        $scope.error = res.data.error;
+                    }
+                });
+            }else{
+                $scope.error = res.data.error;
+            }
+        });
+    };
+}]);
+
+app.controller("createProject",["$scope",'$http','$state',function($scope,$http,$state){
+    $scope.name = "";
+    $scope.brief = "";
+    $scope.industry = "";
+    $scope.skills = "";
+    
+    $scope.register = function(){
+        $http(api.createProject({
+            name : $scope.name,
+            brief : $scope.brief,
+            industry : $scope.industry,
+            skills : $scope.skills
+        })).then(function(res){
+            if(res.data && res.data.data && res.data.ok){
+                $http(api.login({name : $scope.name})).then(function(res){
+                    if(res.data && res.data.ok){
+                        $state.go("/view-project/"+$scope.name);
                     }else{
                         $scope.error = res.data.error;
                     }

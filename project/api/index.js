@@ -58,6 +58,8 @@ var createProject = function(req,res){
                 brief   : req.body.brief,
                 industry  : req.body.industry,
                 skills   : req.body.skills
+            },function(err,rows){
+                res.json({ok : !err});
             });
         }else{
             res.json({ok : false, error : "Account exists already"});
@@ -67,6 +69,8 @@ var createProject = function(req,res){
 
 var login = function(req,res){
     models.users.findOne({name : {eq : req.body.name}},function(err,user){
+        req.session.user = user;
+        req.session.save();
         res.json({ok : !err, data : user || null, error : err ? err.message : null});
     });
 };
