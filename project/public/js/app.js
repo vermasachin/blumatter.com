@@ -35,16 +35,29 @@ app.config([
             controller : "logout"
         });
        
-        // Admin access only
-        $stateProvider.state('users', {
-            url : '/users',
-            templateUrl : 'html/users.html'
+        $stateProvider.state('registerClient', {
+            url : '/register-client',
+            templateUrl : 'html/clientRegister.html'
         });
         
-        // Admin access only, save other user profile
-        $stateProvider.state('users.username.update', {
-            url : '/users/:username/update',
-            templateUrl : 'html/userUpdate.html'
+        $stateProvider.state('registerExpert', {
+            url : '/register-expert',
+            templateUrl : 'html/expertRegister.html'
+        });
+        
+        $stateProvider.state('createProject', {
+            url : '/create-project',
+            templateUrl : 'html/createProject.html'
+        });
+        
+        $stateProvider.state('listProjects', {
+            url : '/list-projects',
+            templateUrl : 'html/listProjects.html'
+        });
+        
+        $stateProvider.state('viewProject', {
+            url : '/view-project',
+            templateUrl : 'html/viewProject.html'
         });
         
     }
