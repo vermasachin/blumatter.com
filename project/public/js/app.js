@@ -60,3 +60,42 @@ app.config([
         
     }
 ]);
+
+app.controller("login",["$scope",'$http','$state',function($scope,$http,$state){
+    $scope.name = "";
+    
+    $scope.login = function(){
+        $http(api.login({name : $scope.name})).then(function(res){
+            if(res.data && res.data.data && res.data.data.name){
+                var user = res.data.data;
+                if(user.role === 'client'){
+                    $state.go("/create-project");
+                }else{
+                    $state.go("/uploadCV");
+                }
+            }else{
+                $scope.error = res.data.error;
+            }
+        });
+    };
+}]);
+
+app.controller("registerClient",["$scope",'$http','$state',function($scope,$http,$state){
+    $scope.name = "";
+    
+    $scope.login = function(){
+        $http(api.login({name : $scope.name})).then(function(res){
+            if(res.data && res.data.data && res.data.data.name){
+                var user = res.data.data;
+                if(user.role === 'client'){
+                    $state.go("/create-project");
+                }else{
+                    $state.go("/uploadCV");
+                }
+            }else{
+                $scope.error = res.data.error;
+            }
+        });
+    };
+}]);
+
