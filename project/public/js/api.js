@@ -55,5 +55,10 @@ var api = {
         return {
             url : "/jobcodes", method : "GET"
         };
+    },
+    listProjectExperts : function(projectname){
+        return {
+            url : "/experts/"+projectname, method : "GET"
+        };
     }
 };

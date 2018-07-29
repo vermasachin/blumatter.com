@@ -194,7 +194,7 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
         $scope.skillSuggest = $scope.skilllist.filter(function(i, j){ return skill && i.name.match(new RegExp(skill,'i'));}).slice(0,8);
     };
     $scope.addSkill = function(skill){
-        if($scope.selectedSkills.indexOf(skill) === -1){
+        if($scope.selectedSkills.indexOf(skill.name) === -1){
             $scope.selectedSkills.push(skill.name);
         }
         $scope.skills = "";
@@ -258,7 +258,7 @@ app.controller("createProject",["$scope",'$http','$state',function($scope,$http,
         $scope.skillSuggest = $scope.skilllist.filter(function(i, j){ return skill && i.name.match(new RegExp(skill,'i'));}).slice(0,8);
     };
     $scope.addSkill = function(skill){
-        if($scope.selectedSkills.indexOf(skill) === -1){
+        if($scope.selectedSkills.indexOf(skill.name) === -1){
             $scope.selectedSkills.push(skill.name);
         }
         $scope.skills = "";
@@ -288,6 +288,11 @@ app.controller("viewProject",["$scope",'$http','$state','$stateParams',function(
         $http(api.viewProject($params.projectName)).then(function(res){
             if(res.data && res.data.data){
                 $scope.project = res.data.data;
+                $http(api.listProjectExperts($scope.project.name)).then(function(res){
+                    if(res.data && res.data.data){
+                        $scope.experts = res.data.data;
+                    }
+                });
             }else{
                 $scope.error = res.data.error;
             }

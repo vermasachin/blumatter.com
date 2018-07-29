@@ -22,7 +22,8 @@ CREATE TABLE expert (
     cvfile          varchar(255),
     description     varchar(255),
     industry        varchar(50),
-    skills          json
+    skills          json,
+    cvtext          text
     
 );
 

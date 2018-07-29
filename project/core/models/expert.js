@@ -20,7 +20,8 @@ var props = {
     cvfile          : types.string,
     description     : types.string,
     industry        : types.string,
-    skills          : types.json
+    skills          : types.json,
+    cvtext          : types.string
 };
 
 class Expert extends model.Model{

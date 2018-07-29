@@ -1,6 +1,9 @@
-<div class="col-lg-12 col-lg-offset-1" ng-controller="userController">
+<div class="col-lg-10 col-lg-offset-1" ng-controller="userController">
     <div ng-if="user">
-        {{ user.name }}
-        <a href="#" ng-click="logout()" >Logout</a>
+        <button class="btn btn-primary btn-lg">
+            <span class="glyphicon glyphicon-user"></span>
+            {{ user.name }}
+        </button>
+        <a class="btn btn-primary btn-lg" href="#" ng-click="logout()" >Logout</a>
     </div>
 </div>

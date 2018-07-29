@@ -210,6 +210,7 @@ class Model {
         }catch(e){
             return cb(e);
         }
+        console.log(sql,cnd.params);
         pg.selectAll(sql,cnd.params,cb);
     }
     

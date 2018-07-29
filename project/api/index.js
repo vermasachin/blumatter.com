@@ -15,7 +15,7 @@ var multer = require("multer");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-          cb(null, 'cv/')
+          cb(null, 'cv/');
     },
     filename: function (req, file, cb) {
           var ext = file.mimetype.indexOf("pdf") > -1 ? 'pdf' : 'docx';
@@ -88,6 +88,14 @@ var viewProject = function(req,res){
     });
 };
 
+var getExperts = function(req,res){
+    models.project.findOne({name : {eq : req.params.projectname}},function(err,project){
+        models.expert.find({ industry : {eq : project.industry}},function(err,experts){
+            res.json({ok : !err, data : experts});
+        });
+    });
+};
+
 var login = function(req,res){
     models.users.findOne({name : {eq : req.body.name}},function(err,user){
         req.session.user = user;
@@ -133,4 +141,5 @@ exports.addRoutes = function(app){
     app.post("/uploadcv",cvUpload,upload);
     app.get("/industry",listIndustry);
     app.get("/jobcodes",listJobCodes);
+    app.get("/experts/:projectname",getExperts);
 };

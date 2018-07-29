@@ -1,36 +1,44 @@
-<div class="col-lg-12 col-lg-offset-1" ng-controller="viewProject">
-    <form class="form-horizontal" ng-submit="register()">
-        <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="name" >
-                <b>Name</b>
-            </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                {{ project.name }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="brief" >
-                <b>Brief</b>
-            </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                {{ project.brief }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="industry" >
-                <b>Industry</b>
-            </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                {{ project.industry }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="skills" >
-                <b>Skills</b>
-            </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                {{ project.skills }}
-            </div>
-        </div>
-    </form>
+<div class="col-lg-10 col-lg-offset-1" ng-controller="viewProject">
+    <h3>Project Details</h3>
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>{{ project.name }}</td>
+            </tr>
+            <tr>
+                <td>Brief</td>
+                <td>{{ project.brief }}</td>
+            </tr>
+            <tr>
+                <td>Industry</td>
+                <td>{{ project.industry }}</td>
+            </tr>
+            <tr>
+                <td>Skills</td>
+                <td><span class="label label-primary" ng-repeat="sk in project.skills" style="margin-right: 5px; margin-top: 2px;">{{ sk }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Experts</h3>
+    <table class="table table-bordered table-striped" ng-if="experts.length">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Location</td>
+                <td>Summary</td>
+                <td>Industry</td>
+                <td>Skills</td>    
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="expert in experts">
+                <td>{{ expert.name }}</td>
+                <td>{{ expert.location }}</td>
+                <td>{{ expert.description }}</td>
+                <td>{{ expert.industry }}</td>
+                <td><span class="label label-primary" ng-repeat="sk in project.skills" style="margin-right: 5px; margin-top: 2px;">{{ sk }}</span></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
