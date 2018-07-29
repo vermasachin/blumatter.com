@@ -38,10 +38,10 @@ var createExpert = function(req,res){
                 email : req.body.email,
                 phone : req.body.phone,
                 location : req.body.location,
-                description : req.body.desc,
+                description : req.body.description,
                 industry : req.body.industry,
                 skills : req.body.skills
-            },function(err,res){
+            },function(err,result){
                 res.json({ok : !err, error : err ? err.message : null});
             });
         }else{

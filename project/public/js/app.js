@@ -180,7 +180,7 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
             industry : $scope.industry,
             skills : $scope.skills
         })).then(function(res){
-            if(res.data && res.data.data && res.data.ok){
+            if(res.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
                         userSrv.set(res.data.data);
