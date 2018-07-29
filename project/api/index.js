@@ -106,7 +106,22 @@ var getExperts = function(req,res){
             });
             filter1.sort(function(a,b){ return b.matchingSkills - a.matchingSkills;});
             
-            res.json({ok : !err, data : filter1});
+            // Select only those with some match in brief and cv
+            var filter2 = filter1.filter(function(expert){
+                var matches = 0, briefarr = [], cvarr = [];
+                briefarr = project.brief.replace(/(\n+| +|\t+)/g," ").replace(/\./g,"").split(" ");
+                cvarr = expert.cvtext.replace(/(\n+| +|\t+)/g," ").replace(/\./g,"").split(" ");
+                briefarr.forEach(function(sk){
+                    if(cvarr.indexOf(sk) > -1){
+                        matches++;
+                    }
+                });
+                expert.matchingWords = matches;
+                return matches;
+            });
+            filter2.sort(function(a,b){ return b.matchingWords - a.matchingWords;});
+            
+            res.json({ok : !err, data : filter2});
         });
     });
 };
