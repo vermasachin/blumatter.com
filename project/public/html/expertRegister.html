@@ -1,51 +1,52 @@
-<div class="col-lg-12 col-lg-offset-1" ng-controller="registerExpert">
-    <form class="form-horizontal" ng-submit="register()">
+<div class="col-lg-3 col-lg-offset-1" ng-controller="registerExpert">
+    <h3>Register As Expert</h3>
+    <form ng-submit="register()" style="margin-top: 30px;">
         
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="name" >
+            <label for="name" >
                 <b>Name</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="name" ng-model="name" class="form-control" type="text"  />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="email" >
+            <label for="email" >
                 <b>Email</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="email" ng-model="email" class="form-control" type="text"  />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="phone" >
+            <label for="phone" >
                 <b>Phone</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="phone" ng-model="phone" class="form-control" type="text"  />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="location" >
+            <label for="location" >
                 <b>Location</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="location" ng-model="location" class="form-control" type="text"  />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="description" >
+            <label for="description" >
                 <b>Description</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="description" ng-model="description" class="form-control" type="text"  />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="industry" >
+            <label for="industry" >
                 <b>Industry</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="industry" ng-model="industry" class="form-control" type="text" ng-change="showIndustries()"  />
                 <div class="autosuggest" ng-show="suggestedInd.length">
                     <ul class="dropdown-menu" style="display: block;left: 15px; width: 60%; cursor: pointer;">
@@ -57,10 +58,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="skills" >
+            <label for="skills" >
                 <b>Skills</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="skills" ng-model="skills" class="form-control" type="text" ng-change="showSkills()" />
                 <div style="width : 100%;padding : 5px 0px 5px 0px;">
                     <span class="label label-primary" ng-repeat="sk in selectedSkills" style="margin-right: 5px; margin-top: 2px;">{{ sk }}</span>
@@ -75,7 +76,8 @@
             </div>
         </div>
     </form>
-    <a href="#" class="btn btn-primary btn-lg" ng-click="register()" >
+    <a href="#" class="btn btn-primary btn-lg col-lg-3" ng-click="register()" >
         Register
     </a>
+    <div class="alert alert-danger col-lg-8 col-lg-offset-1" role="alert" ng-if="error">{{ error }}</div>
 </div>

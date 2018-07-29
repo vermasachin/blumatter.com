@@ -102,6 +102,7 @@ var viewProject = function(req,res){
 var getExperts = function(req,res){
     models.project.findOne({name : {eq : req.params.projectname}},function(err,project){
         models.expert.find({ industry : {eq : project.industry}},function(err,experts){
+            experts = experts || [];
             // Select only those with at least one matching skill
             var filter1 = experts.filter(function(expert){
                 var matchingSkills = 0;

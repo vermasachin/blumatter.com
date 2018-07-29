@@ -174,6 +174,7 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
     $scope.industry = "";
     $scope.skills = "";
     $scope.selectedSkills = [];
+    $scope.error = "";
     
     $scope.industries = []; $scope.suggestedInd = [];
     $scope.skilllist = []; $scope.skillSuggest = [];
@@ -207,6 +208,7 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
     
     
     $scope.register = function(){
+        $scope.error = "";  
         $http(api.registerExpert({
             name : $scope.name,
             email : $scope.email,
