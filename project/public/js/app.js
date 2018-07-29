@@ -166,7 +166,6 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
     $scope.email = "";
     $scope.phone = "";
     $scope.location = "";
-    $scope.cvfile = "";
     $scope.description = "";
     $scope.industry = "";
     $scope.skills = "";
@@ -177,7 +176,6 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
             email : $scope.email,
             phone : $scope.phone,
             location : $scope.location,
-            cvfile : $scope.cvfile,
             description : $scope.description,
             industry : $scope.industry,
             skills : $scope.skills
