@@ -115,8 +115,10 @@ app.controller("home",["user",'$state','$scope',function(user,$state,$scope){
 
 app.controller("login",["$scope",'$http','$state', 'user',function($scope,$http,$state,userSrv){
     $scope.name = "";
+    $scope.error = "";
     
     $scope.login = function(){
+        $scope.error = "";
         $http(api.login({name : $scope.name})).then(function(res){
             if(res.data && res.data.data && res.data.data.name){
                 var user = res.data.data;
@@ -137,8 +139,10 @@ app.controller("registerClient",["$scope",'$http','$state','user',function($scop
     $scope.name = "";
     $scope.email = "";
     $scope.phone = "";
+    $scope.error = "";
     
     $scope.register = function(){
+        $scope.error = "";
         $http(api.registerClient({
             name : $scope.name,
             email: $scope.email, 
@@ -234,6 +238,7 @@ app.controller("createProject",["$scope",'$http','$state',function($scope,$http,
     $scope.industry = "";
     $scope.skills = "";
     $scope.selectedSkills = [];
+    $scope.error = "";
     
     $scope.industries = []; $scope.suggestedInd = [];
     $scope.skilllist = []; $scope.skillSuggest = [];
@@ -266,6 +271,7 @@ app.controller("createProject",["$scope",'$http','$state',function($scope,$http,
     };
     
     $scope.register = function(){
+        $scope.error = "";
         $http(api.createProject({
             name : $scope.name,
             brief : $scope.brief,

@@ -34,6 +34,9 @@ var home = function(req,res){
 };
 
 var createClient = function(req,res){
+    if(!req.body.name || !req.body.email){
+        return res.json({ok : false, error : "Invalid name/email"});
+    }
     models.client.findOne({ name : {eq : req.body.name} }, function(err){
         if(err && err.message === 'not_found'){
             models.client.insert({
@@ -42,12 +45,15 @@ var createClient = function(req,res){
                 res.json({ok : !err, error : err ? err.message : null});
             });
         }else{
-            res.json({ok : false, error : "Client found already"});
+            res.json({ok : false, error : "Client exists already"});
         }
     });
 };
 
 var createExpert = function(req,res){
+    if(!req.body.name || !req.body.email){
+        return res.json({ok : false, error : "Invalid name/email"});
+    }
     models.expert.findOne({ name : {eq : req.body.name} }, function(err){
         if(err && err.message === 'not_found'){
             models.expert.insert({
@@ -68,6 +74,9 @@ var createExpert = function(req,res){
 };
 
 var createProject = function(req,res){
+    if(!req.body.name || !req.body.brief || !req.body.industry){
+        return res.json({ok : false, error : "Invalid input"});
+    }
     models.project.findOne({name : {eq : req.body.name}}, function(err,project){
         if(err && err.message === 'not_found'){
             models.project.insert({

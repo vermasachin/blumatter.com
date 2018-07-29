@@ -1,9 +1,13 @@
-<div class="col-lg-10 col-lg-offset-1" ng-controller="userController">
-    <div ng-if="user">
-        <button class="btn btn-primary btn-lg">
-            <span class="glyphicon glyphicon-user"></span>
-            {{ user.name }}
-        </button>
-        <a class="btn btn-primary btn-lg" href="#" ng-click="logout()" >Logout</a>
+<div class="row">
+    <div class="col-lg-3 col-lg-offset-1" ng-controller="userController">
+        <div ng-if="user" class="row">
+            <div class="col-lg-8">
+                <span class="glyphicon glyphicon-user"></span>
+                <b style="text-transform: uppercase;">{{ user.name }}</b>
+            </div>
+            <div class="col-lg-4">
+                <a class="btn btn-primary btn-sm pull-right" href="#" ng-click="logout()" >Logout</a>
+            </div>
+        </div>
     </div>
 </div>

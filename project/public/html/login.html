@@ -1,12 +1,17 @@
-<div class="col-lg-12 col-lg-offset-1" ng-controller="login">
-    <form class="form-horizontal" ng-submit="login()">
+<div class="col-lg-3 col-lg-offset-1" ng-controller="login">
+    <h3>Login</h3>
+    <form ng-submit="login()" style="margin-top: 30px;">
         <div class="form-group">
-            <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-5" for="name" >
+            <label for="name" >
                 <b>Name</b>
             </label>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
+            <div>
                 <input id="name" ng-model="name" class="form-control" type="text"  />
             </div>
         </div>
     </form>
+    <a href="#" class="btn btn-primary btn-lg col-lg-3" ng-click="login()" >
+        Login
+    </a>
+    <div class="alert alert-danger col-lg-8 col-lg-offset-1" role="alert" ng-if="error">{{ error }}</div>
 </div>
