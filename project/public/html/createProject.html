@@ -21,7 +21,14 @@
                 <b>Industry</b>
             </label>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                <input id="industry" ng-model="industry" class="form-control" type="text"  />
+                <input id="industry" ng-model="industry" class="form-control" type="text"  ng-change="showIndustries()" />
+                <div class="autosuggest" ng-show="suggestedInd.length">
+                    <ul class="dropdown-menu" style="display: block;left: 15px; width: 60%; cursor: pointer;">
+                        <li class="" ng-repeat="ind in suggestedInd">
+                            <a ng-click="selectIndustry(ind)">{{ ind.name }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -29,7 +36,17 @@
                 <b>Skills</b>
             </label>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-7">
-                <input id="skills" ng-model="skills" class="form-control" type="text"  />
+                <input id="skills" ng-model="skills" class="form-control" type="text" ng-change="showSkills()" />
+                <div style="width : 100%;padding : 5px 0px 5px 0px;">
+                    <span class="label label-primary" ng-repeat="sk in selectedSkills" style="margin-right: 5px; margin-top: 2px;">{{ sk }}</span>
+                </div>
+                <div class="autosuggest" ng-show="skillSuggest.length">
+                    <ul class="dropdown-menu" style="display: block;left: 15px; width: 60%; cursor: pointer;">
+                        <li class="" ng-repeat="skill in skillSuggest">
+                            <a ng-click="addSkill(skill)">{{ skill.name }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </form>

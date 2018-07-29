@@ -45,5 +45,15 @@ var api = {
         return {
             url : "/uploadcv", method : "POST", data : data
         };
+    },
+    listIndustry: function(){
+        return {
+            url : "/industry", method : "GET"
+        };
+    },
+    listJobCodes : function(){
+        return {
+            url : "/jobcodes", method : "GET"
+        };
     }
 };

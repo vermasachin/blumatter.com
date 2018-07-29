@@ -7,6 +7,8 @@
 
 
 var models = require("../core/models/");
+var industry = require("../core/data/industry");
+var jobcodes = require("../core/data/jobcodes");
 var fs = require("fs");
 var path = require("path");
 
@@ -40,7 +42,7 @@ var createExpert = function(req,res){
                 location : req.body.location,
                 description : req.body.description,
                 industry : req.body.industry,
-                skills : req.body.skills
+                skills : JSON.stringify(req.body.skills)
             },function(err,result){
                 res.json({ok : !err, error : err ? err.message : null});
             });
@@ -57,7 +59,7 @@ var createProject = function(req,res){
                 name    : req.body.name,
                 brief   : req.body.brief,
                 industry  : req.body.industry,
-                skills   : req.body.skills
+                skills   : JSON.stringify(req.body.skills)
             },function(err,rows){
                 res.json({ok : !err,error : err ? err.message : null});
             });
@@ -95,6 +97,14 @@ var upload = function(req,res){
     
 };
 
+var listIndustry = function(req,res){
+    res.json(industry);
+};
+
+var listJobCodes = function(req,res){
+    res.json(jobcodes);
+};
+
 exports.addRoutes = function(app){
     app.get("/",home);
     app.get("/me",currentUser);
@@ -106,4 +116,6 @@ exports.addRoutes = function(app){
     app.post("/login",login);
     app.get("/logout",logout);
     app.post("/uploadcv",upload);
+    app.get("/industry",listIndustry);
+    app.get("/jobcodes",listJobCodes);
 };

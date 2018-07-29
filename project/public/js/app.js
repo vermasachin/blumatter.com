@@ -144,7 +144,7 @@ app.controller("registerClient",["$scope",'$http','$state','user',function($scop
             email: $scope.email, 
             phone : $scope.phone
         })).then(function(res){
-            if(res.data && res.data.data && res.data.ok){
+            if(res.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
                         userSrv.set(res.data.data);
@@ -169,6 +169,38 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
     $scope.description = "";
     $scope.industry = "";
     $scope.skills = "";
+    $scope.selectedSkills = [];
+    
+    $scope.industries = []; $scope.suggestedInd = [];
+    $scope.skilllist = []; $scope.skillSuggest = [];
+    
+    $http(api.listIndustry()).then(function(res){
+        $scope.industries = res.data;
+    });
+    
+    $http(api.listJobCodes()).then(function(res){
+        $scope.skilllist = res.data;
+    });
+    
+    $scope.showIndustries = function(){
+        $scope.suggestedInd = $scope.industries.filter(function(i, j){ return $scope.industry && i.name.match(new RegExp($scope.industry,'i'));}).slice(0,8);
+    };
+    $scope.selectIndustry = function(ind){
+        $scope.industry = ind.name;
+        $scope.suggestedInd = [];
+    };
+    $scope.showSkills = function(){
+        var m = $scope.skills.match(/[a-zA-Z ]+$/), skill = m ? m[0] : "";
+        $scope.skillSuggest = $scope.skilllist.filter(function(i, j){ return skill && i.name.match(new RegExp(skill,'i'));}).slice(0,8);
+    };
+    $scope.addSkill = function(skill){
+        if($scope.selectedSkills.indexOf(skill) === -1){
+            $scope.selectedSkills.push(skill.name);
+        }
+        $scope.skills = "";
+        $scope.skillSuggest = [];
+    };
+    
     
     $scope.register = function(){
         $http(api.registerExpert({
@@ -178,7 +210,7 @@ app.controller("registerExpert",["$scope",'$http','$state','user',function($scop
             location : $scope.location,
             description : $scope.description,
             industry : $scope.industry,
-            skills : $scope.skills
+            skills : $scope.selectedSkills
         })).then(function(res){
             if(res.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
@@ -201,13 +233,44 @@ app.controller("createProject",["$scope",'$http','$state',function($scope,$http,
     $scope.brief = "";
     $scope.industry = "";
     $scope.skills = "";
+    $scope.selectedSkills = [];
+    
+    $scope.industries = []; $scope.suggestedInd = [];
+    $scope.skilllist = []; $scope.skillSuggest = [];
+    
+    $http(api.listIndustry()).then(function(res){
+        $scope.industries = res.data;
+    });
+    
+    $http(api.listJobCodes()).then(function(res){
+        $scope.skilllist = res.data;
+    });
+    
+    $scope.showIndustries = function(){
+        $scope.suggestedInd = $scope.industries.filter(function(i, j){ return $scope.industry && i.name.match(new RegExp($scope.industry,'i'));}).slice(0,8);
+    };
+    $scope.selectIndustry = function(ind){
+        $scope.industry = ind.name;
+        $scope.suggestedInd = [];
+    };
+    $scope.showSkills = function(){
+        var m = $scope.skills.match(/[a-zA-Z ]+$/), skill = m ? m[0] : "";
+        $scope.skillSuggest = $scope.skilllist.filter(function(i, j){ return skill && i.name.match(new RegExp(skill,'i'));}).slice(0,8);
+    };
+    $scope.addSkill = function(skill){
+        if($scope.selectedSkills.indexOf(skill) === -1){
+            $scope.selectedSkills.push(skill.name);
+        }
+        $scope.skills = "";
+        $scope.skillSuggest = [];
+    };
     
     $scope.register = function(){
         $http(api.createProject({
             name : $scope.name,
             brief : $scope.brief,
             industry : $scope.industry,
-            skills : $scope.skills
+            skills : $scope.selectedSkills
         })).then(function(res){
             if(res.data && res.data.ok){
                 $state.go("viewProject",{ "projectName" : $scope.name});
