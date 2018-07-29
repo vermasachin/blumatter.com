@@ -19,6 +19,7 @@
     "decompress": "0.2.4",
     "multiparty": "3.2.9",
     "pg": "7.4.0",
-    "aws-sdk": "2.1.45"
+    "aws-sdk": "2.1.45",
+    "multer": "1.3.1"
   }
 }

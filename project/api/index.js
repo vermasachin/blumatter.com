@@ -11,6 +11,19 @@ var industry = require("../core/data/industry");
 var jobcodes = require("../core/data/jobcodes");
 var fs = require("fs");
 var path = require("path");
+var multer = require("multer");
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+          cb(null, 'cv/')
+    },
+    filename: function (req, file, cb) {
+          var ext = file.mimetype.indexOf("pdf") > -1 ? 'pdf' : 'docx';
+          cb(null, file.fieldname + '-' + req.session.user.name+"."+ext);
+    }
+});
+var upload = multer({ storage: storage });
+var cvUpload = upload.fields([{ name: 'cv', maxCount: 1 }]);
 
 
 var home = function(req,res){
@@ -94,7 +107,9 @@ var currentUser = function(req,res){
 };
 
 var upload = function(req,res){
-    
+    models.expert.update({cvfile : req.files['cv'][0].path}, {name : { eq : req.session.user.name}},function(err){
+        res.json({ok : true});
+    });
 };
 
 var listIndustry = function(req,res){
@@ -115,7 +130,7 @@ exports.addRoutes = function(app){
     app.get('/project/:projectname', viewProject);
     app.post("/login",login);
     app.get("/logout",logout);
-    app.post("/uploadcv",upload);
+    app.post("/uploadcv",cvUpload,upload);
     app.get("/industry",listIndustry);
     app.get("/jobcodes",listJobCodes);
 };
