@@ -13,6 +13,8 @@ var fs = require("fs");
 var path = require("path");
 var multer = require("multer");
 
+var pdf = require('pdf-parse');
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
           cb(null, 'cv/');
@@ -115,9 +117,29 @@ var currentUser = function(req,res){
 };
 
 var upload = function(req,res){
-    models.expert.update({cvfile : req.files['cv'][0].path}, {name : { eq : req.session.user.name}},function(err){
-        res.json({ok : true});
+    var file = req.files['cv'][0];
+    var ext = file.mimetype.indexOf("pdf") > -1 ? 'pdf' : 'docx';
+    fs.readFile(file.path,function(err,data){
+        if(!err && ext === 'pdf'){
+            pdf(data).then(function(data){
+                models.expert.update({cvfile : file.path, cvtext : data.text}, {name : { eq : req.session.user.name}},function(err){
+                    res.json({ok : true});
+                });
+            }).catch(function(error){
+                models.expert.update({cvfile : file.path}, {name : { eq : req.session.user.name}},function(err){
+                    res.json({ok : true});
+                });
+            });
+        }else{
+            if(err){
+                console.log(err.message, 'error reading cv file');
+            }
+            models.expert.update({cvfile : file.path}, {name : { eq : req.session.user.name}},function(err){
+                res.json({ok : true});
+            });
+        }
     });
+    
 };
 
 var listIndustry = function(req,res){
