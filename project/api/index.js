@@ -82,7 +82,7 @@ var login = function(req,res){
 };
 
 var logout = function(req,res){
-    res.session.destroy(function(){
+    req.session.destroy(function(){
         res.json({ok : true});
     });
 };
