@@ -61,13 +61,65 @@ app.config([
     }
 ]);
 
-app.controller("login",["$scope",'$http','$state',function($scope,$http,$state){
+app.service("user", ["$http", function($http){
+    var user = null;
+    
+    $http(api.currentUser()).then(function(res){
+        if(res.data && res.data.data){
+            user = res.data.data;
+        }
+    });
+    return {
+        get : function(){
+            return user;
+        },
+        set : function(data){
+            user = data;
+        }
+    };
+}]);
+
+app.controller("userController", ["user",'$http','$scope', function(user,$http,$scope){
+    $scope.user = null;
+    
+    $scope.$watch(function(){
+        return user.get();
+    },function(u){
+        $scope.user = u;
+    });
+    
+    $scope.logout = function(){
+        $http(api.logout()).then(function(res){
+            if(res.data && res.data.ok){
+                user.set(null);
+            }
+        });
+    };
+    
+}]);
+
+app.controller("home",["user",'$state','$scope',function(user,$state,$scope){
+    $scope.$watch(function(){
+        return user.get();
+    },function(u){
+        if(u && u.name){
+            if(u.role === 'client'){
+                $state.go("createProject");
+            }else{
+                $state.go("uploadCV");
+            }
+        }
+    });
+}]);
+
+app.controller("login",["$scope",'$http','$state', 'user',function($scope,$http,$state,userSrv){
     $scope.name = "";
     
     $scope.login = function(){
         $http(api.login({name : $scope.name})).then(function(res){
             if(res.data && res.data.data && res.data.data.name){
                 var user = res.data.data;
+                userSrv.set(user);
                 if(user.role === 'client'){
                     $state.go("createProject");
                 }else{
@@ -80,7 +132,7 @@ app.controller("login",["$scope",'$http','$state',function($scope,$http,$state){
     };
 }]);
 
-app.controller("registerClient",["$scope",'$http','$state',function($scope,$http,$state){
+app.controller("registerClient",["$scope",'$http','$state','user',function($scope,$http,$state,userSrv){
     $scope.name = "";
     $scope.email = "";
     $scope.phone = "";
@@ -94,6 +146,7 @@ app.controller("registerClient",["$scope",'$http','$state',function($scope,$http
             if(res.data && res.data.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
+                        userSrv.set(res.data.data);
                         $state.go("createProject");
                     }else{
                         $scope.error = res.data.error;
@@ -107,7 +160,7 @@ app.controller("registerClient",["$scope",'$http','$state',function($scope,$http
 }]);
 
 
-app.controller("registerExpert",["$scope",'$http','$state',function($scope,$http,$state){
+app.controller("registerExpert",["$scope",'$http','$state','user',function($scope,$http,$state,userSrv){
     $scope.name = "";
     $scope.email = "";
     $scope.phone = "";
@@ -131,6 +184,7 @@ app.controller("registerExpert",["$scope",'$http','$state',function($scope,$http
             if(res.data && res.data.data && res.data.ok){
                 $http(api.login({name : $scope.name})).then(function(res){
                     if(res.data && res.data.data && res.data.data.name){
+                        userSrv.set(res.data.data);
                         $state.go("uploadCV");
                     }else{
                         $scope.error = res.data.error;
@@ -156,18 +210,27 @@ app.controller("createProject",["$scope",'$http','$state',function($scope,$http,
             industry : $scope.industry,
             skills : $scope.skills
         })).then(function(res){
-            if(res.data && res.data.data && res.data.ok){
-                $http(api.login({name : $scope.name})).then(function(res){
-                    if(res.data && res.data.ok){
-                        $state.go("/view-project/"+$scope.name);
-                    }else{
-                        $scope.error = res.data.error;
-                    }
-                });
+            if(res.data && res.data.ok){
+                $state.go("viewProject",{ "projectName" : $scope.name});
             }else{
                 $scope.error = res.data.error;
             }
         });
     };
+}]);
+
+app.controller("viewProject",["$scope",'$http','$state','$stateParams',function($scope,$http,$state, $params){
+    $scope.project = null;
+    
+    $scope.load = function(){
+        $http(api.viewProject($params.projectName)).then(function(res){
+            if(res.data && res.data.data){
+                $scope.project = res.data.data;
+            }else{
+                $scope.error = res.data.error;
+            }
+        });
+    };
+    $scope.load();
 }]);
 

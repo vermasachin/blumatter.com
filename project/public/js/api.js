@@ -6,6 +6,11 @@
 
 
 var api = {
+    currentUser: function(){
+        return {
+            url : "/me", method : "GET"
+        };
+    },
     login : function(data){
         return {
             url : "/login", method : "POST", data : data
@@ -18,17 +23,22 @@ var api = {
     },
     registerClient : function(data){
         return {
-            url : "client", method : "POST", data : data
+            url : "/client", method : "POST", data : data
         };
     },
     registerExpert : function(data){
         return {
-            url : "expert" , method : "POST", data : data
+            url : "/expert" , method : "POST", data : data
         };
     },
     createProject : function(data){
         return {
-            url : "project", method : "POST", data : data
+            url : "/project", method : "POST", data : data
+        };
+    },
+    viewProject : function(name){
+        return {
+            url : "/project/"+name, method : "GET"
         };
     },
     upload : function(data) {
