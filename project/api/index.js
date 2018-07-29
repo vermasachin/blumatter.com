@@ -93,7 +93,20 @@ var viewProject = function(req,res){
 var getExperts = function(req,res){
     models.project.findOne({name : {eq : req.params.projectname}},function(err,project){
         models.expert.find({ industry : {eq : project.industry}},function(err,experts){
-            res.json({ok : !err, data : experts});
+            // Select only those with at least one matching skill
+            var filter1 = experts.filter(function(expert){
+                var matchingSkills = 0;
+                project.skills.forEach(function(sk){
+                    if(expert.skills.indexOf(sk) > -1){
+                        matchingSkills++;
+                    }
+                });
+                expert.matchingSkills = matchingSkills;
+                return matchingSkills;
+            });
+            filter1.sort(function(a,b){ return b.matchingSkills - a.matchingSkills;});
+            
+            res.json({ok : !err, data : filter1});
         });
     });
 };
