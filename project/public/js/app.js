@@ -79,7 +79,7 @@ app.service("user", ["$http", function($http){
     };
 }]);
 
-app.controller("userController", ["user",'$http','$scope', function(user,$http,$scope){
+app.controller("userController", ["user",'$http','$scope','$state', function(user,$http,$scope,$state){
     $scope.user = null;
     
     $scope.$watch(function(){
@@ -92,6 +92,7 @@ app.controller("userController", ["user",'$http','$scope', function(user,$http,$
         $http(api.logout()).then(function(res){
             if(res.data && res.data.ok){
                 user.set(null);
+                $state.go("home");
             }
         });
     };
