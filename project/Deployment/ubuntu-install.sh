@@ -26,4 +26,4 @@ exit
 cd blumatter/project
 sudo npm install
 sudo npm install -g mocha forever
-forever app.js > access.log 2> error.log &
+sudo forever app.js > access.log 2> error.log &
