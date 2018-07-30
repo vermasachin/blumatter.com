@@ -7,6 +7,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var config = require("./config");
 
 // ******* Node Lib     ************ //
 var http = require('http');
@@ -27,7 +28,7 @@ app.use(require('morgan')('dev'));
 var router = require("./api/");
 
 // all environments
-app.set('port', 3000);
+app.set('port', config.xrf.port);
 app.set('views', './public/html');
 app.enable('strict routing');
 app.use(express.static(path.join(__dirname, 'public'),{ maxAge: 31557600000 }));
