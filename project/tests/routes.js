@@ -144,8 +144,6 @@ module.exports = {
                 {
                     test : function(actual){
                         assert.equal(actual.hasOwnProperty('data'),true);
-                        console.log(actual.data);
-                        assert.equal(actual.data.length,1,true);
                     },
                     status : 200
                 }
