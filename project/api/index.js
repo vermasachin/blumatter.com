@@ -119,6 +119,9 @@ var getExperts = function(req,res){
             // Select only those with some match in brief and cv
             var filter2 = filter1.filter(function(expert){
                 var matches = 0, briefarr = [], cvarr = [];
+                if(!project.brief || !expert.cvtext){
+                    return matches;
+                }
                 briefarr = project.brief.replace(/(\n+| +|\t+)/g," ").replace(/\./g,"").split(" ");
                 cvarr = expert.cvtext.replace(/(\n+| +|\t+)/g," ").replace(/\./g,"").split(" ");
                 briefarr.forEach(function(sk){

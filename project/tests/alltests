@@ -1,0 +1,3 @@
+api:
+	mocha -C -R spec ./apitest.js
+.PHONY: test
