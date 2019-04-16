@@ -15,3 +15,5 @@ The Developer's updates will be tested for following aspects -
 * Ability to create automated tests
 * Code quality standards
 * Ability to create beautiful, bug free, fast UI
+
+** Please ignore aws integration and file upload features **
