@@ -5,8 +5,8 @@
     "pg": {
         "pghost": "localhost",
         "pgport": "5432",
-        "pgrole": "xadmin",
-        "pgdb": "postgres",
+        "pgrole": "sachin",
+        "pgdb": "blumatter",
         "pgpass": "rewq12",
         "pgschema": "blumatter"
     }

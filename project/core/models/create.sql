@@ -35,6 +35,6 @@ CREATE TABLE blumatter.project (
 );
 
 CREATE VIEW blumatter.users as 
-    SELECT name, email, 'client' as role from client
+    SELECT name, email, 'client' as role from blumatter.client
     UNION
-    SELECT name, email, 'expert' as role from expert;
+    SELECT name, email, 'expert' as role from blumatter.expert;
