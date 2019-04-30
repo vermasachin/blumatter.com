@@ -1,11 +1,15 @@
 import React from 'react';
-
-const register = () => {
-  fetch('/client', { method: 'POST', data:'test' }).then(data => console.log(data)).catch(err => console.log(err))
-}
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Landing from './Landing';
 
 const App = () => {
-  return <><button onClick={register}>Test</button></>
-}
+  return (
+    <Router>
+      <Switch>
+        <Route path='/' component={Landing} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;
