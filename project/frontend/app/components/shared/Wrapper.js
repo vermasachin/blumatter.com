@@ -6,9 +6,9 @@ const StyledWrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
-  // background: #1c2730;
+  background: #28363f;
   margin: 0 auto;
-  padding: 0 24px;
+  // padding: 0 24px;
   width: 1200px;
 `;
 

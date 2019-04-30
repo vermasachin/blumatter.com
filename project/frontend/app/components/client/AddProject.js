@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
-import { toast } from 'react-toastify';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { endpoint } from '../../constants';
 import Title from '../shared/Title';
-import Button from '../shared/Button';
 import Form from '../shared/Form';
-import Input from '../shared/Input';
 import Label from '../shared/Label';
+import Input from '../shared/Input';
+import Button from '../shared/Button';
+import Wrapper from '../shared/Wrapper';
 import Panel from '../shared/Panel';
 import PanelWrap from '../shared/PanelWrap';
-import P from '../shared/Paragraph';
-import A from '../shared/Link';
 
-class ExpertRegister extends Component {
+class AddProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      email: '',
-      phone: '',
-      location: '',
-      description: '',
+      brief: '',
       industries: [],
       industry: '',
       skills: [],
@@ -34,37 +29,22 @@ class ExpertRegister extends Component {
     this.getSkills();
   }
 
-  register = e => {
-    const {
-      name,
-      email,
-      phone,
-      location,
-      description,
-      industry,
-      skill
-    } = this.state;
+  createProject = e => {
+    const { name, brief, industry, skill } = this.state;
     e.preventDefault();
     axios
-      .post(`${endpoint}/expert`, {
+      .post(`${endpoint}/project`, {
         name,
-        email,
-        phone,
-        location,
-        description,
+        brief,
         industry,
         skills: skill
       })
       .then(response => {
-        if (response.data.ok) {
-          this.props.history.push('/expert-dashboard');
-          toast.success('Registered Successfully.');
-        } else {
-          toast.error(response.data.error);
-        }
+        this.props.history.push(`/client-dashboard/view-project/${name}`);
       })
       .catch(error => {
-        toast.error(error.data.error);
+        console.log(error);
+        toast.error(error.data.error || error.response.error);
       });
   };
 
@@ -85,25 +65,15 @@ class ExpertRegister extends Component {
   };
 
   render() {
-    const {
-      name,
-      email,
-      phone,
-      location,
-      description,
-      industries,
-      skills
-    } = this.state;
-
+    const { name, brief, industries, industry, skills, skill } = this.state;
     return (
       <>
-        <Helmet>
-          <title>Blumatter - Expert Register</title>
-        </Helmet>
         <PanelWrap>
           <Panel>
-            <Title centered>Register as an Expert</Title>
-            <Form onSubmit={this.register}>
+            <Title dark centered>
+              Create Project
+            </Title>
+            <Form onSubmit={this.createProject}>
               <Label>Name</Label>
               <Input
                 type='text'
@@ -112,35 +82,11 @@ class ExpertRegister extends Component {
                 onChange={e => this.handleChange(e)}
                 required
               />
-              <Label>Email</Label>
+              <Label>Brief</Label>
               <Input
-                type='email'
-                name='email'
-                value={email}
-                onChange={e => this.handleChange(e)}
-                required
-              />
-              <Label>Phone</Label>
-              <Input
-                type='number'
-                name='phone'
-                value={phone}
-                onChange={e => this.handleChange(e)}
-                required
-              />
-              <Label>Location</Label>
-              <Input
-                type='text'
-                name='location'
-                value={location}
-                onChange={e => this.handleChange(e)}
-                required
-              />
-              <Label>Description</Label>
-              <Input
-                type='text'
-                name='description'
-                value={description}
+                type='brief'
+                name='brief'
+                value={brief}
                 onChange={e => this.handleChange(e)}
                 required
               />
@@ -169,18 +115,13 @@ class ExpertRegister extends Component {
                 ))}
               </datalist>
               <Button primary type='submit'>
-                Register
+                Submit
               </Button>
             </Form>
-
-            <P>
-              Already registered? <A to='/'>Login</A>
-            </P>
           </Panel>
         </PanelWrap>
       </>
     );
   }
 }
-
-export default ExpertRegister;
+export default AddProject;

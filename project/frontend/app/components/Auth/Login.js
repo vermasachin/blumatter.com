@@ -1,125 +1,85 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-// import { toast } from 'react-toastify';
-import styled from 'styled-components';
 import axios from 'axios';
 import { endpoint } from '../../constants';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Title from '../shared/Title';
 import Button from '../shared/Button';
+import Form from '../shared/Form';
+import Input from '../shared/Input';
+import Label from '../shared/Label';
+import Panel from '../shared/Panel';
+import PanelWrap from '../shared/PanelWrap';
+import P from '../shared/Paragraph';
+import A from '../shared/Link';
 
-const PanelWrap = styled.div`
-  margin: 0 auto;
-  width: 420px;
-  height: 100vh;
-  justify-content: center;
-  flex-direction: column;
-  display: flex;
-`;
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: ''
+    };
+  }
 
-const Panel = styled.div`
-  border-radius: 6px;
-  background: #1c2730;
-  padding: 24px 36px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const Label = styled.label`
-  margin: 0 0 4px 0;
-  display: block;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #e3e3e3;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  border: #222;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  width: 100%;
-`;
-
-const P = styled.p`
-  margin: 8px 0;
-  font-size: 0.8rem;
-  color: white;
-`;
-
-const A = styled(Link)`
-  color: #0275d8;
-  text-decoration: none;
-`;
-
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const login = e => {
+  login = e => {
+    const { name } = this.state;
     e.preventDefault();
     axios
-      .post(
-        `${endpoint}/api/users/login`,
-        {
-          email,
-          password
-        },
-        { withCredentials: true }
-      )
-      .then(function(response) {
-        localStorage.setItem('name', response.data.name);
-        props.history.push(`/dashboard`);
+      .post(`${endpoint}/login`, {
+        name
       })
-      .catch(function(error) {
-        toast.error(error.response.data.error || error.response.data);
+      .then(response => {
+        localStorage.setItem('name', response.data.data.name);
+        response.data.ok
+          ? this.props.history.push(`/client-dashboard`)
+          : toast.error(response.data.error);
+      })
+      .catch(error => {
+        console.log(error);
+        // toast.error(error.response.data.error || error.response.data);
       });
   };
 
-  return (
-    <>
-      <Helmet>
-        <title>Blumatter Login</title>
-      </Helmet>
-      <PanelWrap>
-        <Panel>
-          <Title centered>Blumatter - Login</Title>
-          <Form onSubmit={login}>
-            <Label>Email</Label>
-            <Input
-              type='email'
-              name='email'
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-            <Label>Password</Label>
-            <Input
-              type='password'
-              name='password'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-            <Button primary type='submit'>
-              Login
-            </Button>
-          </Form>
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-          <P>Need an account?</P>
-          <P>
-            <A to='/client-register/'>Register as a Client</A>
-            {'  '}OR{'  '}
-            <A to='/expert-register/'>Register as an expert.</A>
-          </P>
-        </Panel>
-      </PanelWrap>
-    </>
-  );
-};
+  render() {
+    const { name } = this.state;
+
+    return (
+      <>
+        <Helmet>
+          <title>Blumatter Login</title>
+        </Helmet>
+        <PanelWrap>
+          <Panel>
+            <Title centered>Blumatter - Login</Title>
+            <Form onSubmit={this.login}>
+              <Label>Name</Label>
+              <Input
+                type='text'
+                name='name'
+                value={name}
+                onChange={e => this.handleChange(e)}
+                required
+              />
+              <Button primary type='submit'>
+                Login
+              </Button>
+            </Form>
+
+            <P>Need an account?</P>
+            <P>
+              <A to='/client-register/'>Register as a Client</A>
+              {'  '}OR{'  '}
+              <A to='/expert-register/'> Register as an expert</A>
+            </P>
+          </Panel>
+        </PanelWrap>
+      </>
+    );
+  }
+}
 
 export default Login;
