@@ -4,7 +4,7 @@
 
 TODO:
 
-- [] Write Tests
+- [ ] Write Tests
 
 1. Login as a non-root user with sudo privileges.
 2. Install UFW firewall `apt install ufw`.
