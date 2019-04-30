@@ -1,5 +1,7 @@
 ## Blumatter Task Setup Instructions - Debian Server
 
+### Demo: http://157.230.161.129:3000/ (not served by nginx, facing some issues with that, this one is using /public folder to serve build)
+
 1. Login as a non-root user with sudo privileges.
 2. Install UFW firewall `apt install ufw`.
 3. Allow SSH access before enabling the firewall `ufw allow OpenSSH`.
