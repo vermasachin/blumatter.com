@@ -35,7 +35,7 @@ class ClientRegister extends Component {
           this.props.history.push('/client-dashboard');
           toast.success('Registered Successfully.');
         } else {
-          toast.error(response.data.error);
+          toast.error(response.data.error || 'Error Registering');
         }
       })
       .catch(error => {
